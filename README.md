@@ -51,7 +51,7 @@ PS: You need to have the [Nodejs](https://nodejs.org/en) library and the [Yarn](
 Clone the repository
 
 ```bash
-https://github.com/fjrbarros/movies.git
+https://github.com/fjrbarros/movies-api
 ```
 
 install dependencies
@@ -81,7 +81,8 @@ After that, if any data in the file is inconsistent or invalid, you will be able
 
 ps: the first line of the csv is ignored as it is the file header.
 
-//put image here
+![image](https://github.com/user-attachments/assets/98bccd75-cbb9-48a5-9fa9-07b20d9a896a)
+
 
 You can also access exactly all the data in the file (valid) in the database that is in memory, just access the route: `http://localhost:3000/v1/movies`
 
@@ -90,12 +91,14 @@ $${\color{red}ps: \space When \space the \space application \space is \space sto
 
 you will see the data in json format as shown in the image:
 
-//put image here
+![image](https://github.com/user-attachments/assets/ab345393-9500-4188-be61-0709d117b414)
+
 
 You can also access the endpoint that returns the min and max award range, just access the url:
 `http://localhost:3000/v1/awards`
 
-//put image here
+![image](https://github.com/user-attachments/assets/e358cdee-ad3c-47e9-a21a-a7399b6322af)
+
 
 ## Test and Coverage
 
@@ -108,4 +111,5 @@ yarn coverage
 
 ##### Result example
 
-//put image here
+![image](https://github.com/user-attachments/assets/fe7da17b-8fcf-4972-be05-b047e9b7d8ce)
+
