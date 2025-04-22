@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+yarn-debug.log*
+yarn-error.log*
+coverage/
+.DS_Store
+jest-html-reporters-*.html
+yarn.lock
