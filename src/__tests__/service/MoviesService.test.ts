@@ -140,7 +140,6 @@ describe("MoviesService", () => {
           interval: 1,
           previousWin: 2020,
           followingWin: 2021,
-          type: movieEnum.MIN,
         },
       ];
       moviesRepository.getProducerAwards.mockResolvedValue(awards);
