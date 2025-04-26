@@ -90,6 +90,20 @@ export class MoviesService implements IMoviesService {
   }
 
   public async getProducerAwards(type: string): Promise<ProducerAwardModel[]> {
-    return this.moviesRepository.getProducerAwards(type);
+    const data = await this.moviesRepository.getProducerAwards(type);
+
+    return data.map(
+      ({
+        producer,
+        interval,
+        previousWin,
+        followingWin,
+      }: ProducerAwardModel) => ({
+        producer,
+        interval,
+        previousWin,
+        followingWin,
+      }),
+    );
   }
 }

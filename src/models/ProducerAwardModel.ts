@@ -4,5 +4,5 @@ export interface ProducerAwardModel {
   interval: number;
   previousWin: number;
   followingWin: number;
-  type: string;
+  type?: string;
 }
