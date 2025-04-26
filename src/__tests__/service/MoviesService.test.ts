@@ -55,7 +55,7 @@ describe("MoviesService", () => {
       await moviesService.createMoviesByCsv(mockFilePath);
 
       expect(fileService.readCSV).toHaveBeenCalledWith(mockFilePath);
-      expect(consoleLogSpy).toHaveBeenCalledWith("Invalid movie data");
+      expect(consoleLogSpy).toHaveBeenCalledWith("Invalid file data");
       expect(consoleTableSpy).toHaveBeenCalledWith([
         { "CSV line": 2, errors: "Invalid year: invalid" },
       ]);
