@@ -63,8 +63,7 @@ export class FileService implements IFileService {
   }
 
   private validateYear(year: number): boolean {
-    const currentYear = new Date().getFullYear();
-    return !Number.isNaN(year) && year >= 1900 && year <= currentYear;
+    return !Number.isNaN(year);
   }
 
   private validateNonEmptyString(value: string): boolean {
