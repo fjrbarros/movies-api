@@ -42,6 +42,13 @@ describe("MoviesService", () => {
           producers: "Producer 1",
           winner: movieEnum.YES,
         },
+        {
+          year: "2021",
+          title: "Movie 2",
+          studios: "Studio 1",
+          producers: "Producer 1",
+          winner: movieEnum.YES,
+        },
       ];
       const invalidMovies = [
         { csvLineError: 2, errors: ["Invalid year: invalid"] },
@@ -109,6 +116,37 @@ describe("MoviesService", () => {
       expect(moviesRepository.addProducerAwards).toHaveBeenCalledWith(
         expectedAwards,
       );
+    });
+
+    it("should throw an error if no producer awards can be calculated", async () => {
+      const mockFilePath = "path/to/movies.csv";
+      const validMovies: MovieModel[] = [
+        {
+          year: "2020",
+          title: "Movie 1",
+          studios: "Studio 1",
+          producers: "Producer 1",
+          winner: "",
+        },
+        {
+          year: "2021",
+          title: "Movie 2",
+          studios: "Studio 2",
+          producers: "Producer 2",
+          winner: "",
+        },
+      ];
+      const invalidMovies: any = [];
+
+      fileService.readCSV.mockResolvedValue({ validMovies, invalidMovies });
+
+      await expect(
+        moviesService.createMoviesByCsv(mockFilePath),
+      ).rejects.toThrow("No prize range has been calculated.");
+
+      expect(fileService.readCSV).toHaveBeenCalledWith(mockFilePath);
+      expect(moviesRepository.addMovies).toHaveBeenCalledWith(validMovies);
+      expect(moviesRepository.addProducerAwards).not.toHaveBeenCalled();
     });
   });
 

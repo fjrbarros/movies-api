@@ -53,36 +53,48 @@ export class MoviesService implements IMoviesService {
       }
     }
 
-    const producerAwards = [];
+    const producerAwards: ProducerAwardModel[] = [];
+
     for (const producer in producerWins) {
       const wins = producerWins[producer].sort((a, b) => a - b);
-      for (let i = 1; i < wins.length; i++) {
-        const interval = wins[i] - wins[i - 1];
-        producerAwards.push({
-          producer,
-          interval,
-          previousWin: wins[i - 1],
-          followingWin: wins[i],
-          type: movieEnum.MIN,
-        });
-        producerAwards.push({
-          producer,
-          interval,
-          previousWin: wins[i - 1],
-          followingWin: wins[i],
-          type: movieEnum.MAX,
-        });
+
+      if (wins.length > 1) {
+        for (let i = 1; i < wins.length; i++) {
+          const interval = wins[i] - wins[i - 1];
+          producerAwards.push({
+            producer,
+            interval,
+            previousWin: wins[i - 1],
+            followingWin: wins[i],
+          });
+        }
       }
+    }
+
+    if (producerAwards.length === 0) {
+      throw new Error("No prize range has been calculated.");
     }
 
     const minInterval = Math.min(...producerAwards.map((a) => a.interval));
     const maxInterval = Math.max(...producerAwards.map((a) => a.interval));
 
-    const minAwards = producerAwards.filter((a) => a.interval === minInterval);
-    const maxAwards = producerAwards.filter((a) => a.interval === maxInterval);
+    const minAwards = producerAwards
+      .filter((a) => a.interval === minInterval)
+      .map((award) => ({
+        ...award,
+        type: movieEnum.MIN,
+      }));
 
-    await this.moviesRepository.addProducerAwards(minAwards);
-    await this.moviesRepository.addProducerAwards(maxAwards);
+    const maxAwards = producerAwards
+      .filter((a) => a.interval === maxInterval)
+      .map((award) => ({
+        ...award,
+        type: movieEnum.MAX,
+      }));
+
+    const allAwards = [...minAwards, ...maxAwards];
+
+    await this.moviesRepository.addProducerAwards(allAwards);
   }
 
   public async getAllMovies(): Promise<MovieModel[]> {
