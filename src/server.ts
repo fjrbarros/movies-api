@@ -13,7 +13,9 @@ initializeDatabase()
     const moviesRepository = new MoviesRepository(db);
     const moviesService = new MoviesService(moviesRepository);
 
+    console.log("Initializing database and loading CSV data...");
     await moviesService.createMoviesByCsv(moviesCSVPath);
+    console.log("Database initialized and CSV data loaded.");
 
     const routes = createRoutes(db);
     app.use("/v1", routes);
@@ -22,4 +24,7 @@ initializeDatabase()
       console.log("Server is running on port 3000");
     });
   })
-  .catch(console.error);
+  .catch((error) => {
+    console.error("Failed to initialize the application:", error);
+    process.exit(1);
+  });
